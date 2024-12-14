@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { FormControl, Select, MenuItem } from "@mui/material";
 
 interface ISwitchLang {
   language: string;
@@ -8,11 +8,10 @@ interface ISwitchLang {
 function SwitchLang({ language, handleLanguageChange }: ISwitchLang) {
   return (
     <FormControl className="w-44">
-      <InputLabel>Select Language</InputLabel>
       <Select
         value={language}
         onChange={(e) => handleLanguageChange(e.target.value)}
-        label="Select Language"
+        sx={{ boxShadow: 'none', '.MuiOutlinedInput-notchedOutline': { border: 0 } }}
       >
         <MenuItem value="Python">Python</MenuItem>
         <MenuItem value="Go">Go</MenuItem>

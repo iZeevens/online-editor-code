@@ -25,7 +25,7 @@ function CodeEditor() {
   };
 
   return (
-    <div className="grid gap-4 grid-rows-[50%_50%] h-full">
+    <div className="grid gap-4 grid-rows-[1fr_1fr] ">
       <Paper className="overflow-auto">
         <div className="flex justify-between">
           <SwitchLang language={language} handleLanguageChange={setLanguage} />
@@ -33,10 +33,10 @@ function CodeEditor() {
         </div>
         <CodeMirror
           extensions={[basicSetup, languageChange()]}
-          className="h-full"
+          className="h-full" 
         />
       </Paper>
-      <Paper className="overflow-auto">
+      <Paper className="overflow-auto p-6">
         <CodeResult />
       </Paper>
     </div>
