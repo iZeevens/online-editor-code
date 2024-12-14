@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start-server": "json-server --watch db.json --port 5000",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -19,6 +20,7 @@
     "@uiw/react-codemirror": "^4.23.6",
     "@vercel/node": "^5.0.0",
     "codemirror": "^6.0.1",
+    "miragejs": "^0.1.48",
     "normalize.css": "^8.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

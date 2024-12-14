@@ -4,12 +4,14 @@ import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
 import { go } from "@codemirror/lang-go";
 import { basicSetup } from "codemirror";
+import CodeResult from "./CodeResult";
 import SwitchLang from "./SwitchLang";
 
 function CodeEditor() {
   const [language, setLanguage] = useState("Python");
   const [code, setCode] = useState("");
   const [output, setOutput] = useState<null | string>(null);
+  const [error, setError] = useState<null | string>(null);
   const [loading, setLoading] = useState(false);
 
   const languageChange = () => {
@@ -28,29 +30,29 @@ function CodeEditor() {
 
   const handleRunCode = async () => {
     setLoading(true);
-    setOutput(null);
 
-    try {
-      const response = await fetch("/api/execute", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ language, code }),
+    fetch("http://localhost:5173/execute", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ language, code }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success") {
+          setOutput(data.output);
+          setError("");
+        } else {
+          setError(data.error);
+          setOutput("");
+        }
+      })
+      .catch(() => {
+        setError("Failed to execute code");
+        setOutput("");
+      })
+      .finally(() => {
+        setLoading(false);
       });
-
-      const result = await response.json();
-      if (result.status === "success") {
-        setOutput(result.output);
-      } else {
-        setOutput(`Error: ${result.error}`);
-      }
-      console.log(result)
-    } catch (error) {
-      setOutput(`Failed to run the code: ${error}`);
-    } finally {
-      setLoading(false);
-    }
   };
 
   return (
@@ -58,7 +60,9 @@ function CodeEditor() {
       <Paper className="overflow-auto">
         <div className="flex justify-between">
           <SwitchLang language={language} handleLanguageChange={setLanguage} />
-          <Button onClick={handleRunCode} variant="outlined">{loading ? 'Running...' : 'Run'}</Button>
+          <Button onClick={handleRunCode} variant="outlined">
+            {loading ? "Running..." : "Run"}
+          </Button>
         </div>
         <CodeMirror
           value={code}
@@ -68,7 +72,7 @@ function CodeEditor() {
         />
       </Paper>
       <Paper className="overflow-auto p-6">
-        <p>{output}</p>
+        <CodeResult output={output || ''} error={error || ''} loading={loading} />
       </Paper>
     </div>
   );

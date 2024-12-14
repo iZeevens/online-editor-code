@@ -1,11 +1,8 @@
-import EditorPage from "./pages/EditorPage"
-import 'normalize.css'
+import EditorPage from "./pages/EditorPage";
+import "normalize.css";
 
 function App() {
-
-  return (
-    <EditorPage />
-  )
+  return <EditorPage />;
 }
 
-export default App
+export default App;
