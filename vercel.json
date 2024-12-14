@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "src/api/execute.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/execute",
+      "dest": "/src/api/execute.ts"
+    }
+  ]
+}
