@@ -1,49 +1,38 @@
 import { Box, Typography, Paper } from "@mui/material";
+import { IDecription } from "./types/descriptionTypes";
 
-function Description() {
+function Description({ title, description, example }: IDecription) {
   return (
-    <Paper className="p-6 h-full">
-      <Box mb={3}>
-        <Typography variant="h4" gutterBottom className="text-blue-600">
-          Two Sum
+    <Paper className="p-6">
+      <Box mb={6}>
+        <Typography
+          variant="h4"
+          className="text-blue-600 text-2xl font-semibold"
+        >
+          {title}
         </Typography>
       </Box>
-      <Box mb={3}>
-        <Typography variant="body1">
-          Given an array of integers <code>nums</code> and an integer{" "}
-          <code>target</code>, return indices of the two numbers such that they
-          add up to <code>target</code>. You may assume that each input would
-          have exactly one solution, and you may not use the same element twice.
-          You can return the answer in any order.
+      <Box mb={6}>
+        <Typography variant="body1" className="text-lg">
+          {description}
         </Typography>
       </Box>
-      <Box mb={3}>
-        <Typography variant="h6">Example 1:</Typography>
-        <Typography variant="body1">
-          <strong>Input:</strong> <code>nums = [2,7,11,15], target = 9</code>
-          <br />
-          <strong>Output:</strong> <code>[0,1]</code>
-          <br />
-          <strong>Explanation:</strong> Because{" "}
-          <code>nums[0] + nums[1] == 9</code>, we return <code>[0, 1]</code>.
-        </Typography>
-      </Box>
-      <Box mb={3}>
-        <Typography variant="h6">Example 2:</Typography>
-        <Typography variant="body1">
-          <strong>Input:</strong> <code>nums = [3,2,4], target = 6</code>
-          <br />
-          <strong>Output:</strong> <code>[1,2]</code>
-        </Typography>
-      </Box>
-      <Box mb={3}>
-        <Typography variant="h6">Example 3:</Typography>
-        <Typography variant="body1">
-          <strong>Input:</strong> <code>nums = [3,3], target = 6</code>
-          <br />
-          <strong>Output:</strong> <code>[0,1]</code>
-        </Typography>
-      </Box>
+      {example.map((ex, index) => (
+        <Box key={index} mb={4}>
+          <Typography variant="h6" className="text-xl font-medium">
+            Example {index + 1}:
+          </Typography>
+          <Typography variant="body1" className="mt-2">
+            <strong>Input:</strong>{" "}
+            <code className="text-green-500">{ex.input}</code>
+            <br />
+            <strong>Output:</strong>{" "}
+            <code className="text-blue-500">{ex.output}</code>
+            <br />
+            <strong>Explanation:</strong> {ex.explanation}
+          </Typography>
+        </Box>
+      ))}
     </Paper>
   );
 }

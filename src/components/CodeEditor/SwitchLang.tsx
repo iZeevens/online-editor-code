@@ -1,11 +1,7 @@
 import { FormControl, Select, MenuItem } from "@mui/material";
+import { ISwitchLangProps } from "./types/codeEditorTypes";
 
-interface ISwitchLang {
-  language: string;
-  handleLanguageChange: (e: string) => void;
-}
-
-function SwitchLang({ language, handleLanguageChange }: ISwitchLang) {
+function SwitchLang({ language, handleLanguageChange }: ISwitchLangProps) {
   return (
     <FormControl className="w-44">
       <Select
