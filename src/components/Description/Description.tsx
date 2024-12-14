@@ -3,7 +3,7 @@ import { Container, Box, Typography, Paper } from "@mui/material";
 function Description() {
   return (
     <Container maxWidth="lg" className="my-6">
-      <Paper className="p-6">
+      <Paper className="p-6 h-full m-0">
         <Box mb={3}>
           <Typography variant="h4" gutterBottom className="text-blue-600">
             Two Sum

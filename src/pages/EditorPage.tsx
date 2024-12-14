@@ -4,7 +4,7 @@ import Description from "../components/Description/Description";
 function EditorPage() {
 
   return (
-    <div className="grid grid-cols-2 ">
+    <div className="grid grid-cols-2 p-15">
       <Description />
       <CodeEditor />
     </div>

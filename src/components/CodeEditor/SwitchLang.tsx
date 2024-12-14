@@ -2,14 +2,12 @@ import { FormControl, InputLabel, Select, MenuItem } from "@mui/material"
 
 interface ISwitchLang {
   language: string
-  handleLanguageChange: (lang: string) => void
+  handleLanguageChange: (e: string) => void
 }
 
 function SwitchLang({language, handleLanguageChange}: ISwitchLang) {
-
-
   return (
-    <FormControl>
+    <FormControl className="w-44">
        <InputLabel>Select Language</InputLabel>
           <Select
             value={language}

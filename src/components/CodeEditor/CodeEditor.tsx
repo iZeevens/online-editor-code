@@ -9,7 +9,7 @@ import { basicSetup } from "codemirror";
 function CodeEditor() {
   const [language, setLanguage] = useState("Python");
 
-  const handleLanguageChange = () => {
+  const languageChange = () => {
     switch (language) {
       case "Python": {
         return python();
@@ -25,11 +25,11 @@ function CodeEditor() {
 
   return (
     <div className="border border-gray-300 rounded-md shadow-md overflow-hidden">
-      <div>
-        <SwitchLang language="" handleLanguageChange={setLanguage} />
-        <Button>Run</Button>
+      <div className="flex justify-between	">
+        <SwitchLang language={language} handleLanguageChange={setLanguage} />
+        <Button variant="outlined">Run</Button>
       </div>
-      <CodeMirror height="90vh" extensions={[basicSetup, handleLanguageChange()]} />
+      <CodeMirror height="90vh" extensions={[basicSetup, languageChange()]} />
     </div>
   );
 }
