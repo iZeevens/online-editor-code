@@ -1,11 +1,9 @@
-import './App.css'
+import EditorPage from "./pages/EditorPage"
 
 function App() {
 
   return (
-    <>
-      <h1>hey</h1>
-    </>
+    <EditorPage />
   )
 }
 
