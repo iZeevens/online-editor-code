@@ -57,7 +57,7 @@ function CodeEditor() {
 
   return (
     <div className="grid gap-4 grid-rows-[1fr_1fr] ">
-      <Paper className="overflow-auto">
+      <Paper className="overflow-auto" elevation={5}>
         <div className="flex justify-between">
           <SwitchLang language={language} handleLanguageChange={setLanguage} />
           <Button onClick={handleRunCode} variant="outlined">
@@ -71,7 +71,7 @@ function CodeEditor() {
           className="h-full"
         />
       </Paper>
-      <Paper className="overflow-auto p-6">
+      <Paper className="overflow-auto p-6" elevation={5}>
         <CodeResult output={output || ''} error={error || ''} loading={loading} />
       </Paper>
     </div>

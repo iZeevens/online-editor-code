@@ -3,7 +3,7 @@ import { IDecription } from "./types/descriptionTypes";
 
 function Description({ title, description, example }: IDecription) {
   return (
-    <Paper className="p-6">
+    <Paper className="p-6" elevation={5}>
       <Box mb={6}>
         <Typography
           variant="h4"
