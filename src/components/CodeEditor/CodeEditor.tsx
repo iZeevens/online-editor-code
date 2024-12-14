@@ -5,10 +5,12 @@ import { python } from "@codemirror/lang-python";
 import { go } from "@codemirror/lang-go";
 import { basicSetup } from "codemirror";
 import SwitchLang from "./SwitchLang";
-import CodeResult from "./CodeResult";
 
 function CodeEditor() {
   const [language, setLanguage] = useState("Python");
+  const [code, setCode] = useState("");
+  const [output, setOutput] = useState<null | string>(null);
+  const [loading, setLoading] = useState(false);
 
   const languageChange = () => {
     switch (language) {
@@ -24,20 +26,49 @@ function CodeEditor() {
     }
   };
 
+  const handleRunCode = async () => {
+    setLoading(true);
+    setOutput(null);
+
+    try {
+      const response = await fetch("/api/execute", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ language, code }),
+      });
+
+      const result = await response.json();
+      if (result.status === "success") {
+        setOutput(result.output);
+      } else {
+        setOutput(`Error: ${result.error}`);
+      }
+      console.log(result)
+    } catch (error) {
+      setOutput(`Failed to run the code: ${error}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="grid gap-4 grid-rows-[1fr_1fr] ">
       <Paper className="overflow-auto">
         <div className="flex justify-between">
           <SwitchLang language={language} handleLanguageChange={setLanguage} />
-          <Button variant="outlined">Run</Button>
+          <Button onClick={handleRunCode} variant="outlined">{loading ? 'Running...' : 'Run'}</Button>
         </div>
         <CodeMirror
+          value={code}
           extensions={[basicSetup, languageChange()]}
-          className="h-full" 
+          onChange={(value) => setCode(value)}
+          className="h-full"
         />
       </Paper>
       <Paper className="overflow-auto p-6">
-        <CodeResult />
+        <p>{output}</p>
       </Paper>
     </div>
   );
