@@ -8,3 +8,11 @@ html, body, #root {
   padding: 5px;
   display: flex;
 }
+
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+}

@@ -29,6 +29,11 @@ function CodeEditor() {
   };
 
   const handleRunCode = async () => {
+    if (!code.trim()) {
+      setError("Code cannot be empty.");
+      return;
+    }
+
     setLoading(true);
 
     fetch("/execute", {
