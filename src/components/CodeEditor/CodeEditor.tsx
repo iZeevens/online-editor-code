@@ -31,7 +31,7 @@ function CodeEditor() {
   const handleRunCode = async () => {
     setLoading(true);
 
-    fetch("http://localhost:5173/execute", {
+    fetch("/execute", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ language, code }),
