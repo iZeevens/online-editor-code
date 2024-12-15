@@ -56,7 +56,7 @@ function CodeEditor() {
   };
 
   return (
-    <div className="grid gap-4 grid-rows-[1fr_1fr] ">
+    <div className="grid gap-4 grid-rows-[2fr_1fr] ">
       <Paper className="overflow-auto" elevation={5}>
         <div className="flex justify-between">
           <SwitchLang language={language} handleLanguageChange={setLanguage} />
@@ -69,6 +69,7 @@ function CodeEditor() {
           extensions={[basicSetup, languageChange()]}
           onChange={(value) => setCode(value)}
           className="h-full"
+          style={{ height: "300px" }}
         />
       </Paper>
       <Paper className="overflow-auto p-6" elevation={5}>
