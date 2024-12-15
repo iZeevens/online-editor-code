@@ -1,50 +1,90 @@
-# React + TypeScript + Vite
+# Online Code Editor
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Описание
 
-Currently, two official plugins are available:
+Упрощенный онлайн-редактор кода с подсветкой синтаксиса для двух языков (Python и Go)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Функционал
 
-## Expanding the ESLint configuration
+1. Поддержка выбор языка программирования.
+2. Отправка введеного код на сервер через мок-запрос(иммитация).
+3. Отображать результат выполнения кода или ошибку, если запрос не удался.
+4. Удобный и простой интерфейс
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Установка и запуск
 
-- Configure the top-level `parserOptions` property like this:
+### Установка:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. Клонируйте репозиторий:
+   ```bash
+   git clone https://github.com/iZeevens/online-editor-code
+   ```
+2. Установите зависимости:
+   ```bash
+   npm install
+   ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Запуск приложения:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. Запустите приложение:
+   ```bash
+   npm run dev
+   ```
+2. Откройте браузер и перейдите по адресу [http://localhost:5173](http://localhost:5173) или перейдите по адресу []().
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Мок-сервер
+
+Для тестирования взаимодействия с сервером используется мок-сервер(miragejs). Он настроен для обработки POST-запросов на эндпоинт `/execute` и возвращает предопределенные ответы на основе входных данных.
+
+### Логика работы:
+
+- Если отправленный код содержит ошибку (например если ввести `error`), сервер вернет ответ с полем `error`.
+- Если код корректен (любое другое сообщение), сервер вернет результат выполнения через поле `output`.
+
+### Пример:
+
+- **Запрос:**
+  ```json
+  {
+    "language": "Python",
+    "code": "print('Hello, world!')"
+  }
+  ```
+- **Ответ (успех):**
+  ```json
+  {
+    "status": "success",
+    "output": "Hello, world!"
+  }
+  ```
+- **Ответ (ошибка):**
+  ```json
+  {
+    "status": "error",
+    "error": "SyntaxError: invalid syntax"
+  }
+  ```
+
+### Настройка мок-сервера:
+
+1. Мок-сервер встроен в приложение и настроен для работы на севере.
+2. При необходимости вы можете заменить его на реальный сервер, изменив URL в запросе `fetch` в компоненте `CodeEditor` или на локальный заменив на 'http://localhost:5173/execute'.
+
+## Структура проекта
+
+- `src/components` - Компоненты пользовательского интерфейса (редактор, переключатель языков, результаты выполнения).
+- `src/pages` - Страницы приложения.
+- `src/data` - Пример данных для отображения описания задачи.
+- `src/api` - Мок сервер.
+
+
+### Возможные ограничения функционала
+
+1. Ограниченная поддержка языков - На данный момент редактор поддерживает только Python и Go. Расширение на другие языки может быть выполнено легко.
+2. Отсутствие полноценного выполнения кода: Редактор полагается на иммитацию сервера для выполнения кода. Локальное выполнение не реализовано.
+
+### Варианты расширения приложения
+
+1. Добавление поддержки других языков программирования
+2. Создание сервера для полноценного выполнения кода
+3. Создание стринцы с различным задачами, профиль и т.д.
